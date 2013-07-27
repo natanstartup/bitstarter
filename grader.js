@@ -30,6 +30,7 @@ var uril = require('util');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
 var URL_DEFAULT = "http://stormy-hamlet-5735.herokuapp.com/";
+var urlfile = "urlfile";
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -45,7 +46,7 @@ var cheerioHtmlFile = function(htmlfile) {
 };
 
 var cheerioURL = function(string1) {
-    return cheerio.load(string1);
+ return cheerio.load(string1);
 };
 
 
@@ -69,7 +70,6 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 var checkUrl = function (url, checksfile) {
 var processurl = buildfn(checksfile);
 rest.get(url).on('complete', processurl);
-console.log("CheckURL");
 };
 
 
@@ -80,8 +80,7 @@ var buildfn = function(checksfile) {
 	    console.error('Error: ' + util.format(response.message));
 	} 
 	else {
-	    console.log(response);
-	    $ = cheerioURL(response);
+	    $ = cheerioURL(result);
 	    var checks = loadChecks(checksfile).sort();
 	    var out = {};
 	    for(var ii in checks) {
@@ -114,7 +113,7 @@ if(require.main == module) {
     if (program.url == null) {
 	var checkJson = checkHtmlFile(program.file, program.checks);
         var outJson = JSON.stringify(checkJson, null, 4);
-        console.log("from file"); 
+//        console.log("from file"); 
         console.log(outJson);
 
     }
